@@ -138,8 +138,7 @@ apps/migrations/*
 media
 templates/public/*
 touch .gitignore
-
-
+Description.txt
 
 
 

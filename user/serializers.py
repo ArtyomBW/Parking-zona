@@ -49,7 +49,6 @@ class VerifyOTPSerializer(Serializer):                # Kodni qabul qilish uchun
     email = CharField(max_length=255)
     code = CharField(max_length=12)
 
-
     def validate(self, attrs):
         redis = Redis(decode_responses=True)
         email = attrs.get('email')

@@ -63,11 +63,11 @@ Fix_category:
 Fix_cat:
 	 python manage loaddata category.json # Category json fayl ni aktivatsiya qilish
 
-#push:
-#	@read -p "Commit izohini kiriting: " m; \
-#	git add . ; \
-#	git commit -m "$$m"; \
-#	git push
+push:
+	@read -p "Commit izohini kiriting: " m; \
+	git add . ; \
+	git commit -m "$$m"; \
+	git push
 
 
 
