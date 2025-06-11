@@ -69,6 +69,6 @@ push:
 	git commit -m "$$m"; \
 	git push
 
-
+# Salmlar
 
 
