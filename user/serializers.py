@@ -5,10 +5,12 @@ from datetime import timedelta
 
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
+from drf_spectacular.utils import extend_schema
 from redis import Redis
 from rest_framework.exceptions import ValidationError
 from rest_framework.fields import CharField
 from rest_framework.serializers import ModelSerializer, Serializer
+from rest_framework.views import APIView
 
 from root.settings import EMAIL_HOST_USER
 from user.models import User
@@ -24,7 +26,6 @@ class RegisterModelSerializer(ModelSerializer):
 
     def validate_phone(self, value):
         return re.sub(r'\D', '',value)  # re kutubxona D = Digit , '' = bosh joy faqat sonlar qoladi
-
 
 class ForgotSerializer(Serializer):         # Forgot password uchun emailga xabar berish
     email = CharField(max_length=255, )
@@ -66,7 +67,6 @@ class VerifyOTPSerializer(Serializer):                  # Kodni qabul qilish uch
         redis.expire(email, time=timedelta(minutes=3))
         return attrs
 
-
 class ChangePasswordSerializer(Serializer):
     email = CharField(max_length=255)
     password = CharField(max_length=128)
@@ -76,7 +76,7 @@ class ChangePasswordSerializer(Serializer):
         redis = Redis(decode_responses=True)
         data_str = redis.mget(value)[0]         # dict --> str
 
-        if not data_str:                        # Error shu erda
+        if not data_str:                        # Kod yuborilmagan bolsa
             raise ValidationError("Kod yuborilmagan yoki muddati tugagan ...")
 
         try:
@@ -104,8 +104,17 @@ class ChangePasswordSerializer(Serializer):
         password = data.get('password')
         User.objects.filter(email=email).update(password=password)
 
+class ProfileModelSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = 'username', 'email', 'first_name', 'last_name', 'phone', 'date_joined', 'role'
+        # Ovverride qilingan User modelidan olingan ma'lumotlar'
+        # fields bu Swager natijasiga nimalar korinishini belgilash
+        read_only_fields = 'date_joined','email','role'
+        # Ko'rish mumkun lekin o'zgartirish mumkunmas parametrlarini berish
 
-
+    def validate_phone(self, value):
+        return re.sub(r'\D', '',value)
 
 
 
