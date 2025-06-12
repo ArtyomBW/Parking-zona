@@ -45,9 +45,9 @@ class ForgotSerializer(Serializer):         # Forgot password uchun emailga xaba
         send_mail("Very code:", code,
             EMAIL_HOST_USER,[email])
 
-class VerifyOTPSerializer(Serializer):                # Kodni qabul qilish uchun
-    email = CharField(max_length=255)
-    code = CharField(max_length=12)
+class VerifyOTPSerializer(Serializer):                  # Kodni qabul qilish uchun
+    email = CharField(max_length=255)                   # paroini almashtruvchi gmail
+    code = CharField(max_length=12)                     # random code
 
     def validate(self, attrs):
         redis = Redis(decode_responses=True)

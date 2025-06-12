@@ -7,6 +7,7 @@ from user.views import CustomTokenRefreshView, CustomTokenObtainPairView, Custom
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/auth/', include('user.urls')),
+
 ]
 
 

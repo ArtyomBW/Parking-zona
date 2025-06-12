@@ -69,6 +69,4 @@ push:
 	git commit -m "$$m"; \
 	git push
 
-# Salomlar
-
 
