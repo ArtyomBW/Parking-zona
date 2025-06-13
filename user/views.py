@@ -1,11 +1,12 @@
 from http import HTTPStatus
 
 from django.http import JsonResponse
+from django.views.generic import DeleteView
 from drf_spectacular.utils import extend_schema
 from drf_spectacular.views import SpectacularAPIView
 from rest_framework.decorators import permission_classes
-from rest_framework.generics import CreateAPIView, UpdateAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView, DestroyAPIView
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -73,19 +74,16 @@ class ProfileUpdateAPIView(UpdateAPIView):
     def get_object(self):
         return self.request.user
 
+@extend_schema(tags=['Profile'], responses=ProfileModelSerializer)
+class ProfileListAPIView(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = ProfileModelSerializer
 
-
-
-
-
-
-
-
-
-
-
-
-
+@extend_schema(tags=['Profile'], )
+class ProfileDeleteAPIView(DestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = ProfileModelSerializer
+    permission_classes = [IsAdminUser, IsAuthenticated]
 
 
 

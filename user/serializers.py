@@ -115,6 +115,7 @@ class ProfileModelSerializer(ModelSerializer):
 
     def validate_phone(self, value):
         return re.sub(r'\D', '',value)
+        # Telefin raqamni tertiblash va joylash uchun
 
 
 

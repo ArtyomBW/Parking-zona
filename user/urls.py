@@ -20,7 +20,7 @@ urlpatterns = [
 
 urlpatterns += [
     path('profile/about', ProfileAPIView.as_view()),
-    path('profile/update', ProfileUpdateAPIView.as_view())
-    # path('profile/list', ProfileListAPIView.as_view())
-    # path('profile/<int:pk>', ProfileDeleteAPIView.as_view())
+    path('profile/update', ProfileUpdateAPIView.as_view()),
+    path('profile/list', ProfileListAPIView.as_view()),
+    path('profile/<int:pk>', ProfileDeleteAPIView.as_view())
 ]
