@@ -1,9 +1,9 @@
 from datetime import timedelta
 from os.path import join
 from pathlib import Path
+
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$$^lzx*%#*0fz9xx^9a#d#04@eh9y-qr$p&%-g+b9fe=rrajdo'
@@ -12,12 +12,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
 # Application definition
 
 INSTALLED_APPS = [
 
-    'unfold',                    # Admin panel config
+    'unfold',  # Admin panel config
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -30,8 +29,8 @@ INSTALLED_APPS = [
     'user',
 
     # Third party app
-    'rest_framework_simplejwt', # JWT config
-    'drf_spectacular',          # Swagger config
+    'rest_framework_simplejwt',  # JWT config
+    'drf_spectacular',  # Swagger config
 
 ]
 
@@ -47,24 +46,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'root.urls'
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-
 WSGI_APPLICATION = 'root.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -75,8 +57,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -93,7 +73,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -104,7 +83,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -122,6 +100,24 @@ MEDIA_ROOT = join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],       # templates papkasi yo‘q bo‘lsa ham bo‘sh qoldirsa bo‘ladi
+        'APP_DIRS': True,                       # bu True bo‘lishi kerak, chunki admin o‘z templateslarini topadi
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
+
+
 # =-=-=-=-=-=-=-=-=-=-=-=-=-= DRF CONFIG =-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 REST_FRAMEWORK = {
@@ -131,9 +127,17 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',),
 
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+        'rest_framework.parsers.FileUploadParser',
+    ],
+
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 
 }
+
 
 # =-=-=-=-=-=-=-=-=-=-=-=-=-= JWT CONFIG =-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -142,17 +146,14 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Parkovka BW Project API',
     'DESCRIPTION': 'Mit shtarkem has gegden shtrom ',
     'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA':False,
-    'COMPONENT_SPLIT_REQUEST': True,    # Media file uchun
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,  # Media file uchun
 }
-
 
 # =-=-=-=-=-=-=-=-=-=-=-=-=-= Auth CONFIG =-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 # AUTH_USER_MODEL = 'user.User'
 AUTH_USER_MODEL = 'user.User'
-
-
 
 # =-=-=-=-=-=-=-=-=-=-=-=-=-= Celery CONFIG =-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -175,12 +176,10 @@ EMAIL_USE_SSL = False  # Set to True if using SSL
 DEFAULT_FROM_EMAIL = 'artyom.bw08@gmail.com'  # Default sender email address
 
 
-
 # =-=-=-=-=-=-=-=-=-=-=-=-=-= JWT CONFIG =-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(hours=4),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=3),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,

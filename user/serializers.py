@@ -10,10 +10,8 @@ from redis import Redis
 from rest_framework.exceptions import ValidationError
 from rest_framework.fields import CharField
 from rest_framework.serializers import ModelSerializer, Serializer
-from rest_framework.views import APIView
-
 from root.settings import EMAIL_HOST_USER
-from user.models import User
+from user.models import User, ParkingZone
 
 
 class RegisterModelSerializer(ModelSerializer):
@@ -35,8 +33,8 @@ class ForgotSerializer(Serializer):         # Forgot password uchun emailga xaba
             raise ValidationError("Bu gmail topilmadi ...")
         return value
 
-
-    def send_cod(self, email):   # Random code yaratish va yuborish
+    # Random code yaratish va yuborish
+    def send_cod(self, email):
         redis = Redis(decode_responses=True)
         code = str(random.randint(10**5, 10**6))
         data = {"code" : code, "status": False}
@@ -119,5 +117,9 @@ class ProfileModelSerializer(ModelSerializer):
 
 
 
-
+class ParkingZoneSerializer(ModelSerializer):
+    class Meta:
+        model = ParkingZone
+        fields = ('id', 'name', 'coordinates', 'total_spots', 'available_spots', 'daily_rate', 'hourly_rate', 'monthly_rate')
+        read_only_fields = ('id',)
 

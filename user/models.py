@@ -1,8 +1,11 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.migrations.serializer import Serializer
 
-from django.db.models import TextChoices
+from django.db.models import TextChoices, Model
 from django.db.models.fields import CharField
+from rest_framework.serializers import ModelSerializer
+
 
 class UploadedFile(models.Model):
 
@@ -15,6 +18,7 @@ class UploadedFile(models.Model):
 
 
 class User(AbstractUser):
+
     class RoleType(TextChoices):
         USER = 'user', 'User'
         ADMIN = 'admin', 'Admin'
@@ -31,19 +35,18 @@ class User(AbstractUser):
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= Parking Models =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 
+class ParkingZone(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=255)
+    coordinates = models.CharField(max_length=255)
+    total_spots = models.IntegerField(default=0)
+    available_spots = models.IntegerField(default=0)
+    hourly_rate = models.IntegerField(default=0)
+    daily_rate = models.IntegerField(default=0)
+    monthly_rate = models.IntegerField(default=0)
 
-
-
-
-
-
-
-
-
-
-
-
-
+    def __str__(self):
+        return self.name
 
 
 
