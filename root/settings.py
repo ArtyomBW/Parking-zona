@@ -139,8 +139,7 @@ REST_FRAMEWORK = {
 }
 
 
-# =-=-=-=-=-=-=-=-=-=-=-=-=-= JWT CONFIG =-=-=-=-=-=-=-=-=-=-=-=-=-=
-
+# =-=-=-=-=-=-=-=-=-=-=-=-=-= SWAGGER CONFIG =-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Parkovka BW Project API',
@@ -157,23 +156,23 @@ AUTH_USER_MODEL = 'user.User'
 
 # =-=-=-=-=-=-=-=-=-=-=-=-=-= Celery CONFIG =-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Asia/Tashkent'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'          # Broker sifatida Redis ishlatilmoqda
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'      # Task natijalarini Redisga saqlaydi
+CELERY_ACCEPT_CONTENT = ['json']                        # Qabul qilinadigan kontent turi
+CELERY_TASK_SERIALIZER = 'json'                         # Tasklarni JSON ko‘rinishda jo‘natadi
+CELERY_RESULT_SERIALIZER = 'json'                       # Natijalarni JSON qilib saqlaydi
+CELERY_TIMEZONE = 'Asia/Tashkent'                       # Vaqt zonasi
 
 # =-=-=-=-=-=-=-=-=-=-=-=-=-= Gmail CONFIG =-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # SMTP server host
-EMAIL_PORT = 587  # SMTP server port (587 for TLS, 465 for SSL)
-EMAIL_USE_TLS = True  # True for TLS, False for SSL
-EMAIL_HOST_USER = 'artyom.bw08@gmail.com'  # SMTP server username
-EMAIL_HOST_PASSWORD = 'ecwuhvzdscaqkjxt'  # SMTP server password
-EMAIL_USE_SSL = False  # Set to True if using SSL
-DEFAULT_FROM_EMAIL = 'artyom.bw08@gmail.com'  # Default sender email address
+EMAIL_HOST = 'smtp.gmail.com'                           # SMTP server host
+EMAIL_PORT = 587                                        # SMTP server port (587 for TLS, 465 for SSL)
+EMAIL_USE_TLS = True                                    # True for TLS, False for SSL
+EMAIL_HOST_USER = 'artyom.bw08@gmail.com'               # SMTP server username
+EMAIL_HOST_PASSWORD = 'ecwuhvzdscaqkjxt'                # SMTP server password
+EMAIL_USE_SSL = False                                   # Set to True if using SSL
+DEFAULT_FROM_EMAIL = 'artyom.bw08@gmail.com'            # Default sender email address
 
 
 # =-=-=-=-=-=-=-=-=-=-=-=-=-= JWT CONFIG =-=-=-=-=-=-=-=-=-=-=-=-=-=

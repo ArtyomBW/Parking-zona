@@ -43,10 +43,10 @@ postgres:
 	sudo systemctl status postgresql # postgres ishlayotganini tekshirish
 
 S:
-	docker start 817a25d83439 		 # Shaxsiy containerni aktivatsiya qilish
+	docker start 817a25d83439  # Shaxsiy containerni aktivatsiya qilish
 
 redis:
-	docker start 4997e1a4e3eb # Redisni aktivatsiya qilish
+	docker start 4997e1a4e3eb  # Redisni aktivatsiya qilish
 
 Stub:
 	pip3 install django-stubs # Objects funksiyasi uchun :)
@@ -69,6 +69,11 @@ push:
 	git commit -m "$$m"; \
 	git push
 
+go:
+	python manage.py runserver
+
+celery:
+	celery -A root worker -l INFO       # Celery start
 
 
 

@@ -12,6 +12,7 @@ from rest_framework.fields import CharField
 from rest_framework.serializers import ModelSerializer, Serializer
 from root.settings import EMAIL_HOST_USER
 from user.models import User, ParkingZone
+from user.tasks import send_verification_email  # task import qilish
 
 
 class RegisterModelSerializer(ModelSerializer):
@@ -28,21 +29,20 @@ class RegisterModelSerializer(ModelSerializer):
 class ForgotSerializer(Serializer):         # Forgot password uchun emailga xabar berish
     email = CharField(max_length=255, )
     def validate_email(self, value):
-        query = User.objects.filter(email=value)
-        if not query.exists():
+        if not User.objects.filter(email=value).exists():
             raise ValidationError("Bu gmail topilmadi ...")
         return value
 
-    # Random code yaratish va yuborish
     def send_cod(self, email):
+        print("selery")
+        # Random code yaratish va yuborish
         redis = Redis(decode_responses=True)
         code = str(random.randint(10**5, 10**6))
         data = {"code" : code, "status": False}
-        data_str = json.dumps(data)
-        redis.mset({email: data_str})
-        redis.expire(email, timedelta(minutes=3))
-        send_mail("Very code:", code,
-            EMAIL_HOST_USER,[email])
+        redis.set(email, json.dumps(data))
+        redis.expire(email, timedelta(minutes=5))
+
+        send_verification_email.delay(email, code)
 
 class VerifyOTPSerializer(Serializer):                  # Kodni qabul qilish uchun
     email = CharField(max_length=255)                   # paroini almashtruvchi gmail
