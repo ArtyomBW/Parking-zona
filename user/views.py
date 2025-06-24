@@ -97,4 +97,5 @@ class ParkingZoneModelViewSet(viewsets.ModelViewSet):
             return [IsAuthenticated]
         return [IsAdmin()]
 
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-  Pa Zona  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 

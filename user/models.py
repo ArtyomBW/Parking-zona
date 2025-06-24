@@ -1,10 +1,11 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db.migrations.serializer import Serializer
 
 from django.db.models import TextChoices, Model
 from django.db.models.fields import CharField
-from rest_framework.serializers import ModelSerializer
+
+
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= Upload Default Model =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 
 class UploadedFile(models.Model):
@@ -15,6 +16,10 @@ class UploadedFile(models.Model):
 
     def __str__(self):
         return self.name if self.name else "Unnamed File"
+
+
+
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= User Model Override =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 
 class User(AbstractUser):
@@ -32,7 +37,7 @@ class User(AbstractUser):
         return self.username
 
 
-# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= Parking Models =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= Parking Model =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 
 class ParkingZone(models.Model):
@@ -48,5 +53,19 @@ class ParkingZone(models.Model):
     def __str__(self):
         return self.name
 
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= Parking Spot Model =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+class Parking(models.Model):
+    id = models.IntegerField(primary_key=True)
+    zone = models.ForeignKey(ParkingZone, on_delete=models.CASCADE)
+    spot_number = models.CharField(max_length=255)
+    class Status(TextChoices):
+        AVAILABLE = 'available', 'available'
+        OCCUPIED = 'occupied', 'occupied'
+        RESERVED = 'reserved', 'reserved'
+        MAINTENANCE = 'maintenance', 'maintenance'
+    status = models.CharField(max_length=255, choices=Status.choices, default=Status.AVAILABLE)
+    def __str__(self):
+        return self.spot_number
 
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= Parking Spot Model =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
