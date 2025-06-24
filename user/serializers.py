@@ -115,11 +115,10 @@ class ProfileModelSerializer(ModelSerializer):
         return re.sub(r'\D', '',value)
         # Telefin raqamni tertiblash va joylash uchun
 
-
-
 class ParkingZoneSerializer(ModelSerializer):
     class Meta:
         model = ParkingZone
         fields = ('id', 'name', 'coordinates', 'total_spots', 'available_spots', 'daily_rate', 'hourly_rate', 'monthly_rate')
         read_only_fields = ('id',)
+
 

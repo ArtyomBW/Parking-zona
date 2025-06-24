@@ -33,35 +33,15 @@ reset:
 	python manage.py makemigrations
 	python manage.py migrate
 
-container:
-	docker ps -a # Barcha ochiq yopiq containerlarni korish
-
 shell:
 	python manage.py dbshell # Django databasega ulanishini tekshirish
 
 postgres:
 	sudo systemctl status postgresql # postgres ishlayotganini tekshirish
 
-S:
-	docker start 817a25d83439  # Shaxsiy containerni aktivatsiya qilish
-
-redis:
-	docker start 4997e1a4e3eb  # Redisni aktivatsiya qilish
 
 Stub:
 	pip3 install django-stubs # Objects funksiyasi uchun :)
-
-Fix_product:
-	python manage.py dumpdata apps.Product --indent 4 > product.json # Product uchun JSON fayl
-
-Fix_up:
-	make product-json # Json activate cod
-
-Fix_category:
-	python manage.py dumpdata apps.Category --indent 4 > category.json # Category uchun JSON fayl yaratish
-
-Fix_cat:
-	 python manage loaddata category.json # Category json fayl ni aktivatsiya qilish
 
 push:
 	@read -p "Commit izohini kiriting: " m; \
@@ -72,8 +52,12 @@ push:
 go:
 	python manage.py runserver
 
+S:
+	docker start 817a25d83439  # Shaxsiy containerni aktivatsiya qilish
+
+redis:
+	docker start 4997e1a4e3eb  # Redisni aktivatsiya qilish
+
 celery:
 	celery -A root worker -l INFO       # Celery start
-
-
 
